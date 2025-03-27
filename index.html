@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sinal Escolar</title>
+    <script>
+        let horarios = {};
+
+        function definirHorarios() {
+            let inputHorarios = document.getElementById('inputHorarios').value;
+            try {
+                horarios = JSON.parse(inputHorarios);
+                alert('Horários definidos com sucesso!');
+            } catch (e) {
+                alert('Erro ao processar os horários. Certifique-se de inserir um JSON válido.');
+            }
+        }
+
+        function tocarSinal() {
+            let audio = new Audio('sinal.mp3'); // Certifique-se de ter o arquivo MP3 na mesma pasta
+            audio.play();
+        }
+
+        function verificarHorario() {
+            let agora = new Date();
+            let diaSemana = ['domingo', 'segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado'][agora.getDay()];
+            let horarioAtual = agora.getHours().toString().padStart(2, '0') + ':' + agora.getMinutes().toString().padStart(2, '0');
+
+            if (horarios[diaSemana] && horarios[diaSemana].includes(horarioAtual)) {
+                tocarSinal();
+            }
+        }
+
+        setInterval(verificarHorario, 60000); // Verifica a cada minuto
+    </script>
+</head>
+<body>
+    <h1>Sinal Escolar Automático</h1>
+    <p>O sinal será tocado nos horários programados automaticamente.</p>
+    <textarea id="inputHorarios" rows="6" cols="50" placeholder='{"segunda": ["07:00", "12:00", "17:00"]}'></textarea>
+    <br>
+    <button onclick="definirHorarios()">Definir Horários</button>
+</body>
+</html>
