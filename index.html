@@ -6,6 +6,8 @@
     <title>Sinal Escolar</title>
     <script>
         let horarios = {};
+        let audioFile = null;
+        let sincronizarHorario = false;
 
         function definirHorarios() {
             let inputHorarios = document.getElementById('inputHorarios').value;
@@ -18,11 +20,17 @@
         }
 
         function tocarSinal() {
-            let audio = new Audio('sinal.mp3'); // Certifique-se de ter o arquivo MP3 na mesma pasta
-            audio.play();
+            if (audioFile) {
+                let audio = new Audio(audioFile);
+                audio.play();
+            } else {
+                alert('Por favor, selecione um arquivo de áudio primeiro.');
+            }
         }
 
         function verificarHorario() {
+            if (!sincronizarHorario) return;
+            
             let agora = new Date();
             let diaSemana = ['domingo', 'segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado'][agora.getDay()];
             let horarioAtual = agora.getHours().toString().padStart(2, '0') + ':' + agora.getMinutes().toString().padStart(2, '0');
@@ -32,14 +40,37 @@
             }
         }
 
+        function carregarAudio(event) {
+            let file = event.target.files[0];
+            if (file) {
+                audioFile = URL.createObjectURL(file);
+                alert('Arquivo de áudio carregado com sucesso!');
+            }
+        }
+
+        function alternarSincronizacao() {
+            sincronizarHorario = document.getElementById('sincronizarCheckbox').checked;
+        }
+
         setInterval(verificarHorario, 60000); // Verifica a cada minuto
     </script>
 </head>
 <body>
     <h1>Sinal Escolar Automático</h1>
     <p>O sinal será tocado nos horários programados automaticamente.</p>
+    
+    <label>
+        <input type="checkbox" id="sincronizarCheckbox" onclick="alternarSincronizacao()"> Sincronizar com horário do sistema
+    </label>
+    <br>
+    
     <textarea id="inputHorarios" rows="6" cols="50" placeholder='{"segunda": ["07:00", "12:00", "17:00"]}'></textarea>
     <br>
     <button onclick="definirHorarios()">Definir Horários</button>
+    <br><br>
+    
+    <input type="file" accept="audio/mp3" onchange="carregarAudio(event)">
+    <br>
+    <button onclick="tocarSinal()">Tocar Sinal Manualmente</button>
 </body>
 </html>
