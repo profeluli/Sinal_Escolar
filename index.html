@@ -10,13 +10,25 @@
         let sincronizarHorario = false;
 
         function definirHorarios() {
-            let inputHorarios = document.getElementById('inputHorarios').value;
-            try {
-                horarios = JSON.parse(inputHorarios);
-                alert('Horários definidos com sucesso!');
-            } catch (e) {
-                alert('Erro ao processar os horários. Certifique-se de inserir um JSON válido.');
+            let diasSelecionados = document.querySelectorAll('input[name="diasSemana"]:checked');
+            let horario = document.getElementById('horarioInput').value;
+            
+            if (!horario) {
+                alert('Por favor, insira um horário válido.');
+                return;
             }
+            
+            diasSelecionados.forEach(dia => {
+                let diaSemana = dia.value;
+                if (!horarios[diaSemana]) {
+                    horarios[diaSemana] = [];
+                }
+                if (!horarios[diaSemana].includes(horario)) {
+                    horarios[diaSemana].push(horario);
+                }
+            });
+            
+            alert('Horários definidos com sucesso!');
         }
 
         function tocarSinal() {
@@ -62,11 +74,18 @@
     <label>
         <input type="checkbox" id="sincronizarCheckbox" onclick="alternarSincronizacao()"> Sincronizar com horário do sistema
     </label>
-    <br>
+    <br><br>
     
-    <textarea id="inputHorarios" rows="6" cols="50" placeholder='{"segunda": ["07:00", "12:00", "17:00"]}'></textarea>
-    <br>
-    <button onclick="definirHorarios()">Definir Horários</button>
+    <p>Selecione os dias da semana:</p>
+    <label><input type="checkbox" name="diasSemana" value="segunda"> Segunda</label>
+    <label><input type="checkbox" name="diasSemana" value="terca"> Terça</label>
+    <label><input type="checkbox" name="diasSemana" value="quarta"> Quarta</label>
+    <label><input type="checkbox" name="diasSemana" value="quinta"> Quinta</label>
+    <label><input type="checkbox" name="diasSemana" value="sexta"> Sexta</label>
+    <br><br>
+    
+    <input type="time" id="horarioInput">
+    <button onclick="definirHorarios()">Adicionar Horário</button>
     <br><br>
     
     <input type="file" accept="audio/mp3" onchange="carregarAudio(event)">
