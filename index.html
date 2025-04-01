@@ -10,11 +10,11 @@
         let sincronizarHorario = false;
 
         window.onload = function() {
-            // Carregar os horários do localStorage, se existirem
             let horariosSalvos = localStorage.getItem('horarios');
             if (horariosSalvos) {
                 horarios = JSON.parse(horariosSalvos);
             }
+            atualizarListaHorarios();
         };
 
         function definirHorarios() {
@@ -36,9 +36,21 @@
                 }
             });
             
-            // Salvar os horários no localStorage
             localStorage.setItem('horarios', JSON.stringify(horarios));
             alert('Horários definidos com sucesso!');
+            atualizarListaHorarios();
+        }
+
+        function atualizarListaHorarios() {
+            let lista = document.getElementById("listaHorarios");
+            lista.innerHTML = "";
+            for (let dia in horarios) {
+                horarios[dia].forEach(horario => {
+                    let item = document.createElement("li");
+                    item.textContent = `${dia.charAt(0).toUpperCase() + dia.slice(1)} - ${horario}`;
+                    lista.appendChild(item);
+                });
+            }
         }
 
         function tocarSinal() {
@@ -74,7 +86,7 @@
             sincronizarHorario = document.getElementById('sincronizarCheckbox').checked;
         }
 
-        setInterval(verificarHorario, 60000); // Verifica a cada minuto
+        setInterval(verificarHorario, 60000);
     </script>
 </head>
 <body>
@@ -97,7 +109,10 @@
     <input type="time" id="horarioInput">
     <button onclick="definirHorarios()">Adicionar Horário</button>
     <br><br>
-    
+
+    <h2>Horários Programados:</h2>
+    <ul id="listaHorarios"></ul>
+
     <input type="file" accept="audio/mp3" onchange="carregarAudio(event)">
     <br>
     <button onclick="tocarSinal()">Tocar Sinal Manualmente</button>
