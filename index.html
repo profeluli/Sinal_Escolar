@@ -9,6 +9,14 @@
         let audioFile = null;
         let sincronizarHorario = false;
 
+        window.onload = function() {
+            // Carregar os horários do localStorage, se existirem
+            let horariosSalvos = localStorage.getItem('horarios');
+            if (horariosSalvos) {
+                horarios = JSON.parse(horariosSalvos);
+            }
+        };
+
         function definirHorarios() {
             let diasSelecionados = document.querySelectorAll('input[name="diasSemana"]:checked');
             let horario = document.getElementById('horarioInput').value;
@@ -28,6 +36,8 @@
                 }
             });
             
+            // Salvar os horários no localStorage
+            localStorage.setItem('horarios', JSON.stringify(horarios));
             alert('Horários definidos com sucesso!');
         }
 
