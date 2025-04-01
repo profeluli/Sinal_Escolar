@@ -45,11 +45,9 @@
             let lista = document.getElementById("listaHorarios");
             lista.innerHTML = "";
             for (let dia in horarios) {
-                horarios[dia].forEach(horario => {
-                    let item = document.createElement("li");
-                    item.textContent = `${dia.charAt(0).toUpperCase() + dia.slice(1)} - ${horario}`;
-                    lista.appendChild(item);
-                });
+                let item = document.createElement("li");
+                item.textContent = `${dia.charAt(0).toUpperCase() + dia.slice(1)}: ${horarios[dia].join(" - ")}`;
+                lista.appendChild(item);
             }
         }
 
