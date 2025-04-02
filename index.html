@@ -5,7 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sinal Escolar</title>
     <script>
-        let horarios = {};
+        let horarios = {
+            "segunda": ["07:20", "08:10", "09:00", "09:15", "10:05", "10:55", "11:45", "12:35", "12:55", "13:45", "14:35", "15:25", "15:40", "16:30", "17:20"],
+            "terca": ["07:20", "08:10", "09:00", "09:15", "10:05", "10:55", "11:45", "12:35", "12:55", "13:45", "14:35", "15:25", "15:40", "16:30", "17:20"],
+            "quarta": ["07:20", "08:10", "09:00", "09:15", "10:05", "10:55", "11:45", "12:35", "12:55", "13:45", "14:35", "15:25", "15:40", "16:30", "17:20"],
+            "quinta": ["07:20", "08:10", "09:00", "09:15", "10:05", "10:55", "11:45", "12:35", "12:55", "13:45", "14:35", "15:25", "15:40", "16:30", "17:20"],
+            "sexta": ["07:20", "08:10", "09:00", "09:15", "10:05", "10:55", "11:45", "12:35", "12:55", "13:45", "14:35", "15:25", "15:40", "16:30", "17:20"]
+        };
         let audioFile = null;
         let sincronizarHorario = false;
 
@@ -13,33 +19,11 @@
             let horariosSalvos = localStorage.getItem('horarios');
             if (horariosSalvos) {
                 horarios = JSON.parse(horariosSalvos);
+            } else {
+                localStorage.setItem('horarios', JSON.stringify(horarios));
             }
             atualizarListaHorarios();
         };
-
-        function definirHorarios() {
-            let diasSelecionados = document.querySelectorAll('input[name="diasSemana"]:checked');
-            let horario = document.getElementById('horarioInput').value;
-            
-            if (!horario) {
-                alert('Por favor, insira um horário válido.');
-                return;
-            }
-            
-            diasSelecionados.forEach(dia => {
-                let diaSemana = dia.value;
-                if (!horarios[diaSemana]) {
-                    horarios[diaSemana] = [];
-                }
-                if (!horarios[diaSemana].includes(horario)) {
-                    horarios[diaSemana].push(horario);
-                }
-            });
-            
-            localStorage.setItem('horarios', JSON.stringify(horarios));
-            alert('Horários definidos com sucesso!');
-            atualizarListaHorarios();
-        }
 
         function atualizarListaHorarios() {
             let lista = document.getElementById("listaHorarios");
@@ -88,24 +72,12 @@
     </script>
 </head>
 <body>
-    <h1>Colégio Estadual do Campo em Tempo Integral Dr. Júlio Junqueira</h1>
+    <h1>Sinal Escolar Automático</h1>
     <p>O sinal será tocado nos horários programados automaticamente.</p>
     
     <label>
         <input type="checkbox" id="sincronizarCheckbox" onclick="alternarSincronizacao()"> Sincronizar com horário do sistema
     </label>
-    <br><br>
-    
-    <p>Selecione os dias da semana:</p>
-    <label><input type="checkbox" name="diasSemana" value="segunda"> Segunda</label>
-    <label><input type="checkbox" name="diasSemana" value="terca"> Terça</label>
-    <label><input type="checkbox" name="diasSemana" value="quarta"> Quarta</label>
-    <label><input type="checkbox" name="diasSemana" value="quinta"> Quinta</label>
-    <label><input type="checkbox" name="diasSemana" value="sexta"> Sexta</label>
-    <br><br>
-    
-    <input type="time" id="horarioInput">
-    <button onclick="definirHorarios()">Adicionar Horário</button>
     <br><br>
 
     <h2>Horários Programados:</h2>
