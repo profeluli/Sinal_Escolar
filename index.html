@@ -113,7 +113,7 @@
 
         function atualizarListaHorarios() {
             let lista = document.getElementById("listaHorarios");
-            lista.innerHTML = "";
+            lista.innerHTML = "";  // Limpa a lista antes de atualizá-la
             for (let dia in horarios) {
                 let item = document.createElement("li");
                 item.textContent = `${dia.charAt(0).toUpperCase() + dia.slice(1)}: ${horarios[dia].join(" - ")}`;
