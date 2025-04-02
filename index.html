@@ -4,6 +4,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sinal Escolar</title>
+    <style>
+        /* Definindo a fonte Calibri */
+        body {
+            font-family: 'Calibri', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-top: 20px;
+        }
+
+        h2 {
+            color: #2980b9;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        label {
+            font-size: 1.2em;
+            margin-right: 10px;
+        }
+
+        input[type="file"] {
+            margin: 10px 0;
+            padding: 8px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button {
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #1f5a8d;
+        }
+
+        /* Lista de horários */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: center;
+        }
+
+        li {
+            background-color: #ecf0f1;
+            border: 1px solid #ddd;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 1.1em;
+        }
+
+        #sincronizarCheckbox {
+            margin: 10px;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
     <script>
         let horarios = {
             "segunda": ["07:20", "08:10", "09:00", "09:15", "10:05", "10:55", "11:45", "12:35", "12:55", "13:45", "14:35", "15:25", "15:40", "16:30", "17:20"],
@@ -72,19 +158,21 @@
     </script>
 </head>
 <body>
-    <h1>Sinal Escolar Automático</h1>
-    <p>O sinal será tocado nos horários programados automaticamente.</p>
-    
-    <label>
-        <input type="checkbox" id="sincronizarCheckbox" onclick="alternarSincronizacao()"> Sincronizar com horário do sistema
-    </label>
-    <br><br>
+    <div class="container">
+        <h1>Sinal Escolar Automático</h1>
+        <p>O sinal será tocado nos horários programados automaticamente.</p>
+        
+        <label>
+            <input type="checkbox" id="sincronizarCheckbox" onclick="alternarSincronizacao()"> Sincronizar com horário do sistema
+        </label>
+        <br><br>
 
-    <h2>Horários Programados:</h2>
-    <ul id="listaHorarios"></ul>
+        <h2>Horários Programados:</h2>
+        <ul id="listaHorarios"></ul>
 
-    <input type="file" accept="audio/mp3" onchange="carregarAudio(event)">
-    <br>
-    <button onclick="tocarSinal()">Tocar Sinal Manualmente</button>
+        <input type="file" accept="audio/mp3" onchange="carregarAudio(event)">
+        <br>
+        <button onclick="tocarSinal()">Tocar Sinal Manualmente</button>
+    </div>
 </body>
 </html>
